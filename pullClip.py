@@ -8,5 +8,5 @@ def dlClip(inbucket, infile):
   localpath = "video/" + str(uuid.uuid4()) +".mp4"
   s3.download_file(inbucket, infile, localpath)
   c = VideoFileClip(localpath)
-  c.volumex(0)
+  c = c.volumex(0.5)
   return c

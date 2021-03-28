@@ -42,10 +42,12 @@ allvids = [og]
 allvids.extend(captionClips)
 video = CompositeVideoClip(allvids)
 
+for clip in audioClips:
+    print(clip.start)
 sound = CompositeAudioClip(audioClips)
 print("OG duration: " + str(og.duration))
-sound.set_duration(og.duration)
-video.set_duration(og.duration)
-video.set_audio(sound)
+sound = sound.set_duration(og.duration)
+video = video.set_duration(og.duration)
+video = video.set_audio(sound)
 
 video.write_videofile("output/"+args.outfilename)
