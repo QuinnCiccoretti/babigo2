@@ -3,6 +3,9 @@ from speechtotext import makeTranscript
 from englishphraser import getEnglishPhrases
 from translateTextToText import translateEnglishPhrases
 from texttospeech import makeAudioFiles
+from clipMaker import generateAudioClip, generateTextClip 
+from pullClip import dlClip
+from moviepy.editor import CompositeVideoClip, CompositeAudioClip
 import json
 # Get the command line arguments and parse them
 parser = argparse.ArgumentParser( prog='translatevideo.py', description='Process a video found in the input file, process it, and write it out to the output file')
@@ -23,3 +26,26 @@ japanese_phrases = translateEnglishPhrases(english_phrases)
 print(japanese_phrases)
 audio_filename_list = makeAudioFiles(japanese_phrases)
 print(audio_filename_list)
+
+n_phrases = len(english_phrases)
+audioClips = []
+captionClips = []
+for i in range(0, n_phrases):
+  en = english_phrases[i]
+  ja = japanese_phrases[i]
+  audio_filename = audio_filename_list[i]
+  audioClips.append(generateAudioClip(en, ja, audio_filename))
+  captionClips.append(generateTextClip(en, ja))
+
+og = dlClip(args.inbucket, args.infile)
+allvids = [og]
+allvids.extend(captionClips)
+video = CompositeVideoClip(allvids)
+
+sound = CompositeAudioClip(audioClips)
+print("OG duration: " + str(og.duration))
+sound.set_duration(og.duration)
+video.set_duration(og.duration)
+video.set_audio(sound)
+
+video.write_videofile("output/"+args.outfilename)
