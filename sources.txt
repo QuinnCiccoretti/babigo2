@@ -1,0 +1,7 @@
+https://aws.amazon.com/blogs/machine-learning/create-video-subtitles-with-translation-using-machine-learning/
+^ this article informed us on translation and transcription,
+but we ended up changing it drastically
+
+https://github.com/mnicnc404/CartoonGan-tensorflow#generate-anime-using-trained-cartoongan
+
+^ this repository we ran pretty much out of the box on google colab
