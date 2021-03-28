@@ -35,7 +35,7 @@ captionClips = []
 for i in range(0, n_phrases):
   en = english_phrases[i]
   if(i != n_phrases - 1):
-    nexten = english_phrase[i+1]
+    nexten = english_phrases[i+1]
   else:
     nexten = {'start_time':og_time}
   ja = japanese_phrases[i]
@@ -55,4 +55,4 @@ sound = sound.set_duration(og.duration)
 video = video.set_duration(og.duration)
 video = video.set_audio(sound)
 
-video.write_videofile("output/"+args.outfilename)
+video.write_videofile("output/"+args.outfilename, audio_codec='aac')
