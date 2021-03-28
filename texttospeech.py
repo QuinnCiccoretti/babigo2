@@ -1,5 +1,6 @@
 import boto3
 import uuid
+from contextlib import closing
 
 # return a list of strings, audio file names
 def makeAudioFiles(japanese_phrases):
@@ -7,6 +8,7 @@ def makeAudioFiles(japanese_phrases):
   for phrase in japanese_phrases:
     filename = japaneseTextToAudio(phrase['text'])
     filenames.append(filename)
+  return filenames
 
 
 # return an audio file name
@@ -18,7 +20,7 @@ def japaneseTextToAudio(japanese_text):
   if status == 200:
       if "AudioStream" in res:
         with closing(res["AudioStream"]) as stream:
-          rando_filename = uuid.v4() + ".mp3"
+          rando_filename = "audio/"+str(uuid.uuid4()) + ".mp3"
           writeAudio(rando_filename, stream)
           return rando_filename
       else:
