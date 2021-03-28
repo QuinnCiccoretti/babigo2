@@ -2,6 +2,7 @@ import argparse
 from speechtotext import makeTranscript
 from englishphraser import getEnglishPhrases
 from translateTextToText import translateEnglishPhrases
+from texttospeech import makeAudioFiles
 import json
 # Get the command line arguments and parse them
 parser = argparse.ArgumentParser( prog='translatevideo.py', description='Process a video found in the input file, process it, and write it out to the output file')
@@ -20,3 +21,5 @@ english_phrases = getEnglishPhrases(transcript)
 print(english_phrases)
 japanese_phrases = translateEnglishPhrases(english_phrases)
 print(japanese_phrases)
+audio_filename_list = makeAudioFiles(japanese_phrases)
+print(audio_filename_list)
