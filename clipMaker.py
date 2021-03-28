@@ -1,10 +1,11 @@
 from moviepy.editor import AudioFileClip, TextClip
 #the japanese audio
-def generateAudioClip(en, ja, audio_filename):
+def generateAudioClip(en, ja, audio_filename, nexten):
   delta_t = en['end_time'] - en['start_time']
   audio = AudioFileClip(audio_filename)
-  #TODO set duration or speed
-  #start when the english started
+  og_duration = audio.duration
+  if(nexten['start_time'] < en['start_time'] + og_duration):
+    audio = audio.set_duration(delta_t)
   audio = audio.set_start(en['start_time'])
   return audio
 # a caption clip

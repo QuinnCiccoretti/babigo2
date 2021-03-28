@@ -27,17 +27,22 @@ print(japanese_phrases)
 audio_filename_list = makeAudioFiles(japanese_phrases)
 print(audio_filename_list)
 
+og = dlClip(args.inbucket, args.infile)
+og_time = og.duration
 n_phrases = len(english_phrases)
 audioClips = []
 captionClips = []
 for i in range(0, n_phrases):
   en = english_phrases[i]
+  if(i != n_phrases - 1):
+    nexten = english_phrase[i+1]
+  else:
+    nexten = {'start_time':og_time}
   ja = japanese_phrases[i]
   audio_filename = audio_filename_list[i]
-  audioClips.append(generateAudioClip(en, ja, audio_filename))
+  audioClips.append(generateAudioClip(en, ja, audio_filename, nexten))
   captionClips.append(generateTextClip(en, ja))
 
-og = dlClip(args.inbucket, args.infile)
 allvids = [og]
 allvids.extend(captionClips)
 video = CompositeVideoClip(allvids)
